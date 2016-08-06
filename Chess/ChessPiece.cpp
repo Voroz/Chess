@@ -32,6 +32,17 @@ void ChessPiece::render(sf::RenderWindow &window) {
 	window.draw(_sprite);
 }
 void ChessPiece::move(Tile* tile) {
+	bool tileFound = false;
+	for (auto t : possibleMoves()) {
+		if (t == tile) {
+			tileFound = true;
+			break;
+		}
+	}
+	if (!tileFound) {
+		std::cout << "Invalid move" << std::endl;
+		return;
+	}
 	if (tile->holding() != nullptr) {
 		std::vector<ChessPiece*>& chessPieces = tile->board()->chess()->chessPieces();
 		for (int i = 0; i < chessPieces.size(); i++) {
@@ -46,4 +57,7 @@ void ChessPiece::move(Tile* tile) {
 	_currTile = tile;
 	tile->_currPiece = this;
 	update();
+}
+Player& ChessPiece::owner() {
+	return _owner;
 }

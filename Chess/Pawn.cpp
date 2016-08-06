@@ -39,12 +39,14 @@ std::vector<Tile*> Pawn::possibleMoves() {
 	// If there is an enemy chesspiece moveDir left or moveDir right, we can move there.
 	if (index.x - 1 >= 0 && 
 		index.y + 1 * moveDir < 8 && index.y + 1 * moveDir >= 0 &&
-		tiles[index.x - 1][index.y + 1 * moveDir]->holding() != nullptr) {
+		tiles[index.x - 1][index.y + 1 * moveDir]->holding() != nullptr &&
+		&tiles[index.x - 1][index.y + 1 * moveDir]->holding()->owner() != &_owner) {
 		tempVec.push_back(tiles[index.x - 1][index.y + 1 * moveDir]);
 	}
 	if (index.x + 1 < 8 &&
 		index.y + 1 * moveDir < 8 && index.y + 1 * moveDir >= 0 && 
-		tiles[index.x + 1][index.y + 1 * moveDir]->holding() != nullptr) {
+		tiles[index.x + 1][index.y + 1 * moveDir]->holding() != nullptr &&
+		&tiles[index.x + 1][index.y + 1 * moveDir]->holding()->owner() != &_owner) {
 		tempVec.push_back(tiles[index.x + 1][index.y + 1 * moveDir]);
 	}
 	/*...*/

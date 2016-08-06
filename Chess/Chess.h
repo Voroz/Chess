@@ -2,6 +2,8 @@
 #include <vector>
 #include "Vector2.h"
 #include "Board.h"
+#include "Ui.h"
+#include "Controls.h"
 #include "ChessPiece.h"
 #include "King.h"
 #include "Queen.h"
