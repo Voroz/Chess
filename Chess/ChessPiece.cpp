@@ -1,4 +1,5 @@
 #include "ChessPiece.h"
+#include "Chess.h"
 
 
 
@@ -29,4 +30,20 @@ void ChessPiece::update() {
 }
 void ChessPiece::render(sf::RenderWindow &window) {
 	window.draw(_sprite);
+}
+void ChessPiece::move(Tile* tile) {
+	if (tile->holding() != nullptr) {
+		std::vector<ChessPiece*>& chessPieces = tile->board()->chess()->chessPieces();
+		for (int i = 0; i < chessPieces.size(); i++) {
+			if (chessPieces[i] == tile->holding()) {
+				chessPieces.erase(chessPieces.begin() + i);
+				delete tile->holding();
+				break;
+			}
+		}
+	}
+	_currTile->_currPiece = nullptr;
+	_currTile = tile;
+	tile->_currPiece = this;
+	update();
 }

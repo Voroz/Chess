@@ -3,12 +3,13 @@
 
 
 Chess::Chess(Vector2<float> boardSize) :
-	_board(boardSize)
+	_board(new Board(boardSize, this))
 {
 
 }
 Chess::~Chess(){
 	delete _window;
+	delete _board;
 	for (auto cp : _chessPieces) {
 		delete cp;
 	}
@@ -21,22 +22,22 @@ void Chess::run() {
 		std::cout << "Couldn't load " << textName << std::endl;
 	}
 	Player player(MoveDir::Up);
-	_chessPieces.push_back(new Pawn(texture, _board._tiles[0][6], player));
-	_chessPieces.push_back(new Pawn(texture, _board._tiles[1][6], player));
-	_chessPieces.push_back(new Pawn(texture, _board._tiles[2][6], player));
-	_chessPieces.push_back(new Pawn(texture, _board._tiles[3][6], player));
-	_chessPieces.push_back(new Pawn(texture, _board._tiles[4][6], player));
-	_chessPieces.push_back(new Pawn(texture, _board._tiles[5][6], player));
-	_chessPieces.push_back(new Pawn(texture, _board._tiles[6][6], player));
-	_chessPieces.push_back(new Pawn(texture, _board._tiles[7][6], player));
-	_chessPieces.push_back(new King(texture, _board._tiles[4][7], player));
-	_chessPieces.push_back(new Queen(texture, _board._tiles[3][7], player));
-	_chessPieces.push_back(new Rook(texture, _board._tiles[0][7], player));
-	_chessPieces.push_back(new Rook(texture, _board._tiles[7][7], player));
-	_chessPieces.push_back(new Knight(texture, _board._tiles[1][7], player));
-	_chessPieces.push_back(new Knight(texture, _board._tiles[6][7], player));
-	_chessPieces.push_back(new Bishop(texture, _board._tiles[2][7], player));
-	_chessPieces.push_back(new Bishop(texture, _board._tiles[5][7], player));
+	_chessPieces.push_back(new Pawn(texture, _board->_tiles[0][6], player));
+	_chessPieces.push_back(new Pawn(texture, _board->_tiles[1][6], player));
+	_chessPieces.push_back(new Pawn(texture, _board->_tiles[2][6], player));
+	_chessPieces.push_back(new Pawn(texture, _board->_tiles[3][6], player));
+	_chessPieces.push_back(new Pawn(texture, _board->_tiles[4][6], player));
+	_chessPieces.push_back(new Pawn(texture, _board->_tiles[5][6], player));
+	_chessPieces.push_back(new Pawn(texture, _board->_tiles[6][6], player));
+	_chessPieces.push_back(new Pawn(texture, _board->_tiles[7][6], player));
+	_chessPieces.push_back(new King(texture, _board->_tiles[4][7], player));
+	_chessPieces.push_back(new Queen(texture, _board->_tiles[3][7], player));
+	_chessPieces.push_back(new Rook(texture, _board->_tiles[0][7], player));
+	_chessPieces.push_back(new Rook(texture, _board->_tiles[7][7], player));
+	_chessPieces.push_back(new Knight(texture, _board->_tiles[1][7], player));
+	_chessPieces.push_back(new Knight(texture, _board->_tiles[6][7], player));
+	_chessPieces.push_back(new Bishop(texture, _board->_tiles[2][7], player));
+	_chessPieces.push_back(new Bishop(texture, _board->_tiles[5][7], player));
 
 	// Debug test
 	/*std::vector<Tile*> tiles = _chessPieces.back()->possibleMoves();
@@ -64,26 +65,11 @@ void Chess::run() {
 		_window->display();
 	}
 }
-void Chess::swapPieces(Tile* tile1, Tile* tile2) {
-	ChessPiece* tempP = tile1->_currPiece;
-	tile1->_currPiece = tile2->_currPiece;
-	tile2->_currPiece = tempP;
-
-	Tile* tempT = tile1->_currPiece->_currTile;
-	tile1->_currPiece->_currTile = tile2;
-	tile2->_currPiece->_currTile = tempT;
-}
-void Chess::swapPieces(ChessPiece& piece1, ChessPiece& piece2) {
-	Tile* tempT = piece1._currTile;
-	piece1._currTile = piece2._currTile;
-	piece2._currTile = tempT;
-
-	ChessPiece* tempP = piece1._currTile->_currPiece;
-	piece1._currTile->_currPiece = piece2._currTile->_currPiece;
-	piece1._currTile->_currPiece = tempP;
+std::vector<ChessPiece*>& Chess::chessPieces() {
+	return _chessPieces;
 }
 void Chess::render() {
-	_board.render(*_window);
+	_board->render(*_window);
 	for (auto cp : _chessPieces) {
 		cp->render(*_window);
 	}

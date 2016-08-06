@@ -15,6 +15,7 @@ public:
 	~ChessPiece();
 	void update();
 	void render(sf::RenderWindow &window);
+	void move(Tile* tile);
 	virtual std::vector<Tile*> possibleMoves() = 0;
 
 protected:

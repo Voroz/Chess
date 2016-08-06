@@ -2,6 +2,7 @@
 #include <vector>
 #include "Vector2.h"
 #include "Board.h"
+#include "ChessPiece.h"
 #include "King.h"
 #include "Queen.h"
 #include "Rook.h"
@@ -13,6 +14,9 @@
 #include "SFML/Window.hpp"
 #include "SFML/System.hpp"
 
+class Board;
+class ChessPiece;
+
 class Chess
 {
 public:
@@ -20,15 +24,13 @@ public:
 	~Chess();
 
 	void run();
-	int spawnPiece(ChessPiece* piece, Tile* tile);
-	void swapPieces(Tile* tile1, Tile* tile2);
-	void swapPieces(ChessPiece& piece1, ChessPiece& piece2);
+	std::vector<ChessPiece*>& chessPieces();
 
 private:
 	void render();
 
 	sf::RenderWindow* _window;
 	std::vector<ChessPiece*> _chessPieces;
-	Board _board;
+	Board* _board;
 };
 

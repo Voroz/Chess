@@ -1,8 +1,9 @@
 #include "Board.h"
+#include "Chess.h"
 
 
-
-Board::Board(Vector2<float> size) : 
+Board::Board(Vector2<float> size, Chess* chessPtr) :
+	_chessPtr(chessPtr),
 	_size(size)
 {
 	initTiles();
@@ -36,7 +37,10 @@ void Board::initTiles() {
 		}
 	}
 }
-std::array<std::array<Tile*, 8>, 8> Board::tiles() {
+Chess* Board::chess() {
+	return _chessPtr;
+}
+std::array<std::array<Tile*, 8>, 8>& Board::tiles() {
 	return _tiles;
 }
 void Board::render(sf::RenderWindow &window) {

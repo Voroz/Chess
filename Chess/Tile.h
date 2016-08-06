@@ -1,11 +1,11 @@
 #pragma once
-#include "ChessPiece.h"
 #include "Board.h"
+#include "ChessPiece.h"
 #include "Vector2.h"
 #include "SFML/Graphics.hpp"
 
-class ChessPiece;
 class Board;
+class ChessPiece;
 
 class Tile
 {
