@@ -36,3 +36,10 @@ std::vector<Move> Player::possibleMoves() {
 	}
 	return tempVec;
 }
+int Player::score() {
+	int score = 0;
+	for (auto cp : chessPieces()) {
+		score += cp->value();
+	}
+	return score;
+}

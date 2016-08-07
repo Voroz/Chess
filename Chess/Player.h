@@ -14,6 +14,7 @@ public:
 	MoveDir moveDir();
 	std::vector<ChessPiece*> chessPieces();
 	std::vector<Move> possibleMoves();
+	int score();
 
 private:
 	MoveDir _moveDir;

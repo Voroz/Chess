@@ -28,6 +28,7 @@ public:
 	void move(Tile* tile);
 	sf::Sprite& sprite();
 	Player& owner();
+	int value();
 	virtual std::vector<Tile*> possibleMoves() = 0;
 	virtual CpType identify() = 0;
 

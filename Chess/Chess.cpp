@@ -175,37 +175,54 @@ Move Chess::findBestMove(Player& player) {
 	}
 
 
+	Player* opponent = &_player;
+	if (&player != &_computer) {
+		opponent = &_computer;
+	}
+	
 	// Perform simulation and find the best move
-	player.chessPieces()[0]->move(_board->tiles()[0][2]);
-	player.chessPieces()[0]->move(_board->tiles()[0][3]);
-	player.chessPieces()[0]->move(_board->tiles()[0][4]);
-	player.chessPieces()[0]->move(_board->tiles()[0][5]);
-	player.chessPieces()[0]->move(_board->tiles()[1][6]);
 
 	Move bestMove;
-	bestMove.piece = _board->tiles()[0][1]->holding();
-	bestMove.newTile = _board->tiles()[0][4];
 
+	int bestWorstScore = -10000;
+	for (auto pm : player.possibleMoves()) {
+		int worstScore = -10000;
+		pm.piece->move(pm.newTile);
 
-	// Move back everything to the way it was.
+		for (auto opm : opponent->possibleMoves()) {
+			opm.piece->move(opm.newTile);
 
-	for (auto cp : _chessPieces) {
-		delete cp;
-	}
-	_chessPieces = chessPiecesStart;
+			if (worstScore < player.score() - opponent->score()) {
+				worstScore = player.score() - opponent->score();
+			}
 
-	for (int x = 0; x < 8; x++) {
-		for (int y = 0; y < 8; y++) {
-			_board->tiles()[x][y]->_currPiece = nullptr;
+			// Move back everything to the way it was.
+			// TODO: This part is making the game crash because possibleMoves() uses old addresses, which we delete here.
+
+			for (auto cp : _chessPieces) {
+				delete cp;
+			}
+			_chessPieces = chessPiecesStart;
+
+			for (int x = 0; x < 8; x++) {
+				for (int y = 0; y < 8; y++) {
+					_board->tiles()[x][y]->_currPiece = nullptr;
+				}
+			}
+
+			for (auto cp : _chessPieces) {
+				cp->_currTile->_currPiece = cp;
+			}
+
+			for (auto cp : _chessPieces) {
+				cp->update();
+			}
 		}
-	}
 
-	for (auto cp : _chessPieces) {
-		cp->_currTile->_currPiece = cp;
-	}
-
-	for (auto cp : _chessPieces) {
-		cp->update();
+		if (worstScore > bestWorstScore) {
+			bestWorstScore = worstScore;
+			bestMove = pm;
+		}
 	}
 
 	return bestMove;

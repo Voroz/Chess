@@ -67,3 +67,6 @@ Player& ChessPiece::owner() {
 sf::Sprite& ChessPiece::sprite() {
 	return _sprite;
 }
+int ChessPiece::value() {
+	return _value;
+}
