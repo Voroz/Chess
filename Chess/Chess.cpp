@@ -140,39 +140,72 @@ void Chess::run() {
 std::vector<ChessPiece*>& Chess::chessPieces() {
 	return _chessPieces;
 }
-BestMove Chess::findBestMove(Player& player) {
+Move Chess::findBestMove(Player& player) {
 	// TODO: Implement this function (there is just test code inside right now).
 
-	// Save all _board._tiles[x][y]._currPiece and _chessPieces[i]._currTile, so we can restore our board after the simulation.
-	std::array<std::array<ChessPiece*, 8>, 8> tileStartPieces;
-	for (int x = 0; x < 8; x++) {
-		for (int y = 0; y < 8; y++) {
-			tileStartPieces[x][y] = _board->tiles()[x][y]->_currPiece;
-		}
-	}
+	// Copy vector of chessPieces, so we can restore everything later.
 
-	std::vector<Tile*> chessPiecesStartTiles;
-	for (int i = 0; i < _chessPieces.size(); i++) {
-		chessPiecesStartTiles.push_back(_chessPieces[i]->_currTile);
+	std::vector<ChessPiece*> chessPiecesStart;
+	for (auto &cp : _chessPieces) {
+		switch (cp->identify()) {
+			case CpType::PawnT: {
+				chessPiecesStart.push_back(new Pawn(*static_cast<Pawn*>(cp)));
+			} break;
+
+			case CpType::BishopT: {
+				chessPiecesStart.push_back(new Bishop(*static_cast<Bishop*>(cp)));
+			} break;
+
+			case CpType::KnightT: {
+				chessPiecesStart.push_back(new Knight(*static_cast<Knight*>(cp)));
+			} break;
+
+			case CpType::RookT: {
+				chessPiecesStart.push_back(new Rook(*static_cast<Rook*>(cp)));
+			} break;
+
+			case CpType::QueenT: {
+				chessPiecesStart.push_back(new Queen(*static_cast<Queen*>(cp)));
+			} break;
+
+			case CpType::KingT: {
+				chessPiecesStart.push_back(new King(*static_cast<King*>(cp)));
+			} break;
+		}
 	}
 
 
 	// Perform simulation and find the best move
 	player.chessPieces()[0]->move(_board->tiles()[0][2]);
-	BestMove bestMove;
+	player.chessPieces()[0]->move(_board->tiles()[0][3]);
+	player.chessPieces()[0]->move(_board->tiles()[0][4]);
+	player.chessPieces()[0]->move(_board->tiles()[0][5]);
+	player.chessPieces()[0]->move(_board->tiles()[1][6]);
+
+	Move bestMove;
 	bestMove.piece = _board->tiles()[0][1]->holding();
 	bestMove.newTile = _board->tiles()[0][4];
 
 
 	// Move back everything to the way it was.
+
+	for (auto cp : _chessPieces) {
+		delete cp;
+	}
+	_chessPieces = chessPiecesStart;
+
 	for (int x = 0; x < 8; x++) {
 		for (int y = 0; y < 8; y++) {
-			_board->tiles()[x][y]->_currPiece = tileStartPieces[x][y];
+			_board->tiles()[x][y]->_currPiece = nullptr;
 		}
 	}
-	for (int i = 0; i < _chessPieces.size(); i++) {
-		_chessPieces[i]->_currTile = chessPiecesStartTiles[i];
-		_chessPieces[i]->update();
+
+	for (auto cp : _chessPieces) {
+		cp->_currTile->_currPiece = cp;
+	}
+
+	for (auto cp : _chessPieces) {
+		cp->update();
 	}
 
 	return bestMove;

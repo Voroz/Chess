@@ -16,7 +16,7 @@
 #include "SFML/Window.hpp"
 #include "SFML/System.hpp"
 
-struct BestMove {
+struct Move {
 	ChessPiece* piece = nullptr;
 	Tile* newTile = nullptr;
 };
@@ -32,7 +32,7 @@ public:
 
 	void run();
 	std::vector<ChessPiece*>& chessPieces();
-	BestMove findBestMove(Player& player);
+	Move findBestMove(Player& player);
 
 private:
 	void render();

@@ -17,6 +17,7 @@ ChessPiece::ChessPiece(sf::Texture& texture, Tile* tile, Player& owner) :
 	else {
 		tile->_currPiece = this;
 		_currTile = tile;
+		_startTile = _currTile;
 		update();
 	}
 }
