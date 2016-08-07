@@ -2,6 +2,7 @@
 #include <vector>
 #include "ChessPiece.h"
 #include "MoveDir.h"
+#include "Move.h"
 
 class ChessPiece;
 
@@ -12,6 +13,7 @@ public:
 	~Player();
 	MoveDir moveDir();
 	std::vector<ChessPiece*> chessPieces();
+	std::vector<Move> possibleMoves();
 
 private:
 	MoveDir _moveDir;

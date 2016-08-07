@@ -24,3 +24,15 @@ std::vector<ChessPiece*> Player::chessPieces() {
 	}
 	return tempVec;
 }
+std::vector<Move> Player::possibleMoves() {
+	std::vector<Move> tempVec;
+	for (auto cp : chessPieces()) {
+		for (auto pm : cp->possibleMoves()) {
+			Move move;
+			move.piece = cp;
+			move.newTile = pm;
+			tempVec.push_back(move);
+		}
+	}
+	return tempVec;
+}

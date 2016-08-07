@@ -15,11 +15,7 @@
 #include "SFML/Graphics.hpp"
 #include "SFML/Window.hpp"
 #include "SFML/System.hpp"
-
-struct Move {
-	ChessPiece* piece = nullptr;
-	Tile* newTile = nullptr;
-};
+#include "Move.h"
 
 class Board;
 class ChessPiece;
