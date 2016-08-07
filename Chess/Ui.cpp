@@ -37,3 +37,8 @@ void Ui::update() {
 			_controls._mousePos.y - _draggedPiece->sprite().getGlobalBounds().height / 2);
 	}
 }
+void Ui::render(sf::RenderWindow &window) {
+	if (_draggedPiece != nullptr) {
+		_draggedPiece->render(window);
+	}
+}

@@ -13,6 +13,7 @@ public:
 
 	Tile* mouseOnTile();
 	void update();
+	void render(sf::RenderWindow &window);
 
 private:
 	ChessPiece* _draggedPiece;

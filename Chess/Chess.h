@@ -34,5 +34,7 @@ private:
 	sf::RenderWindow* _window;
 	std::vector<ChessPiece*> _chessPieces;
 	Board* _board;
+	Controls _controls;
+	Ui _ui;
 };
 

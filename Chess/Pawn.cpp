@@ -6,7 +6,7 @@ Pawn::Pawn(sf::Texture& texture, Tile* tile, Player& owner) :
 	ChessPiece(texture, tile, owner),
 	_startTile(_currTile)
 {
-	_sprite.setTextureRect(sf::IntRect(1700, 0, 183, 237));
+	_sprite.setTextureRect(sf::IntRect(1700, 0, 183, 265));
 	update();
 }
 
