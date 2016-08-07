@@ -25,5 +25,6 @@ protected:
 	Player& _owner;
 	Tile* _currTile;
 	sf::Sprite _sprite;
+	int _value;
 };
 

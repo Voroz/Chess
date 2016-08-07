@@ -5,6 +5,7 @@
 Bishop::Bishop(sf::Texture& texture, Tile* tile, Player& owner) :
 	ChessPiece(texture, tile, owner)
 {
+	_value = 3;
 	_sprite.setTextureRect(sf::IntRect(667, 0, 256, 265));
 	update();
 }

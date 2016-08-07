@@ -5,6 +5,7 @@
 King::King(sf::Texture& texture, Tile* tile, Player& owner) :
 	ChessPiece(texture, tile, owner)
 {
+	_value = 1000;
 	_sprite.setTextureRect(sf::IntRect(0, 0, 256, 265));
 	update();
 }

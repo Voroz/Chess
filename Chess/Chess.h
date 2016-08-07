@@ -16,6 +16,11 @@
 #include "SFML/Window.hpp"
 #include "SFML/System.hpp"
 
+struct BestMove {
+	ChessPiece* piece = nullptr;
+	Tile* newTile = nullptr;
+};
+
 class Board;
 class ChessPiece;
 
@@ -27,11 +32,14 @@ public:
 
 	void run();
 	std::vector<ChessPiece*>& chessPieces();
+	BestMove findBestMove(Player& player);
 
 private:
 	void render();
 
 	sf::RenderWindow* _window;
+	Player _player;
+	Player _computer;
 	std::vector<ChessPiece*> _chessPieces;
 	Board* _board;
 	Controls _controls;
