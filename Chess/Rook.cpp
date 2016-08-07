@@ -13,6 +13,10 @@ Rook::Rook(sf::Texture& texture, Tile* tile, Player& owner) :
 Rook::~Rook() {
 
 }
+
+CpType Rook::identify() {
+	return CpType::RookT;
+}
 std::vector<Tile*> Rook::possibleMoves() {
 	std::vector<Tile*> tempVec;
 	std::array<std::array<Tile*, 8>, 8> tiles = _currTile->board()->tiles();

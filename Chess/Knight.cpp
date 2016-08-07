@@ -13,6 +13,10 @@ Knight::Knight(sf::Texture& texture, Tile* tile, Player& owner) :
 Knight::~Knight() {
 
 }
+
+CpType Knight::identify() {
+	return CpType::KnightT;
+}
 std::vector<Tile*> Knight::possibleMoves() {
 	std::vector<Tile*> tempVec;
 	std::array<std::array<Tile*, 8>, 8> tiles = _currTile->board()->tiles();

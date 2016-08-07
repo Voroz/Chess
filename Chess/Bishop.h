@@ -8,6 +8,7 @@ public:
 	Bishop(sf::Texture& texture, Tile* tile, Player& owner);
 	~Bishop();
 
+	CpType identify();
 	std::vector<Tile*> possibleMoves();
 };
 

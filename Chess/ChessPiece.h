@@ -4,6 +4,15 @@
 #include "SFML/Graphics.hpp"
 #include "Player.h"
 
+enum CpType {
+	PawnT = 0,
+	BishopT,
+	KnightT,
+	RookT,
+	QueenT,
+	KingT,
+};
+
 class Tile;
 class Player;
 
@@ -20,10 +29,12 @@ public:
 	sf::Sprite& sprite();
 	Player& owner();
 	virtual std::vector<Tile*> possibleMoves() = 0;
+	virtual CpType identify() = 0;
 
 protected:
 	Player& _owner;
 	Tile* _currTile;
+	Tile* _startTile;
 	sf::Sprite _sprite;
 	int _value;
 };

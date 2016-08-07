@@ -64,6 +64,7 @@ void Chess::run() {
 	_chessPieces.push_back(new Bishop(textureBlack, _board->_tiles[2][0], _computer));
 	_chessPieces.push_back(new Bishop(textureBlack, _board->_tiles[5][0], _computer));
 
+	// TODO: Remove this after function is done. Just a test.
 	findBestMove(_computer);
 
 	// Debug test
@@ -142,17 +143,16 @@ std::vector<ChessPiece*>& Chess::chessPieces() {
 BestMove Chess::findBestMove(Player& player) {
 	// TODO: Implement this function (there is just test code inside right now).
 
-	std::vector<ChessPiece*> chessPiecesBackup = _chessPieces;
-	std::array<std::array<Tile*, 8>, 8> tilesBackup = _board->tiles();
+	// Save all _board._tiles[x][y]._currPiece and _chessPieces[i]._currTile, so we can restore our board after the simulation.
 
+	// Perform simulation and find the best move
 	player.chessPieces()[0]->move(_board->tiles()[0][2]);
-
-	_chessPieces = chessPiecesBackup;
-	_board->tiles() = tilesBackup;
-	
 	BestMove bestMove;
 	bestMove.piece = _board->tiles()[0][1]->holding();
 	bestMove.newTile = _board->tiles()[0][4];
+
+	// Move back everything to the way it was.
+
 	return bestMove;
 }
 void Chess::render() {

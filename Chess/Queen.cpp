@@ -13,6 +13,10 @@ Queen::Queen(sf::Texture& texture, Tile* tile, Player& owner) :
 Queen::~Queen() {
 
 }
+
+CpType Queen::identify() {
+	return CpType::QueenT;
+}
 std::vector<Tile*> Queen::possibleMoves() {
 	std::vector<Tile*> tempVec;
 	std::array<std::array<Tile*, 8>, 8> tiles = _currTile->board()->tiles();

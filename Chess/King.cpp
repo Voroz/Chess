@@ -13,6 +13,10 @@ King::King(sf::Texture& texture, Tile* tile, Player& owner) :
 King::~King(){
 
 }
+
+CpType King::identify() {
+	return CpType::KingT;
+}
 std::vector<Tile*> King::possibleMoves() {
 	// TODO: Make this piece unable to move if the move would kill him.
 

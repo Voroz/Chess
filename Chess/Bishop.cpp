@@ -13,6 +13,10 @@ Bishop::Bishop(sf::Texture& texture, Tile* tile, Player& owner) :
 Bishop::~Bishop() {
 
 }
+
+CpType Bishop::identify() {
+	return CpType::BishopT;
+}
 std::vector<Tile*> Bishop::possibleMoves() {
 	std::vector<Tile*> tempVec;
 	std::array<std::array<Tile*, 8>, 8> tiles = _currTile->board()->tiles();

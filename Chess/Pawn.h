@@ -8,9 +8,10 @@ public:
 	Pawn(sf::Texture& texture, Tile* tile, Player& owner);
 	~Pawn();
 
+	CpType identify();
 	std::vector<Tile*> possibleMoves();
 
 private:
-	Tile* _startTile;
+
 };
 

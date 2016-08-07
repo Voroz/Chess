@@ -8,6 +8,7 @@ public:
 	Knight(sf::Texture& texture, Tile* tile, Player& owner);
 	~Knight();
 
+	CpType identify();
 	std::vector<Tile*> possibleMoves();
 };
 

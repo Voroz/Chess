@@ -3,8 +3,7 @@
 
 
 Pawn::Pawn(sf::Texture& texture, Tile* tile, Player& owner) :
-	ChessPiece(texture, tile, owner),
-	_startTile(_currTile)
+	ChessPiece(texture, tile, owner)
 {
 	_value = 1;
 	_sprite.setTextureRect(sf::IntRect(1700, 0, 183, 265));
@@ -13,6 +12,10 @@ Pawn::Pawn(sf::Texture& texture, Tile* tile, Player& owner) :
 
 Pawn::~Pawn() {
 
+}
+
+CpType Pawn::identify() {
+	return CpType::PawnT;
 }
 std::vector<Tile*> Pawn::possibleMoves() {
 	std::vector<Tile*> tempVec;

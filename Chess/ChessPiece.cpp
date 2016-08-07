@@ -5,6 +5,7 @@
 
 ChessPiece::ChessPiece(sf::Texture& texture, Tile* tile, Player& owner) :
 	_currTile(nullptr),
+	_startTile(_currTile),
 	_owner(owner)
 {
 	_sprite.setTexture(texture);

@@ -9,6 +9,7 @@ public:
 	Queen(sf::Texture& texture, Tile* tile, Player& owner);
 	~Queen();
 
+	CpType identify();
 	std::vector<Tile*> possibleMoves();
 };
 
