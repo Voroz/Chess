@@ -1,7 +1,6 @@
 #include "Chess.h"
 
 
-
 Chess::Chess(Vector2<float> boardSize) :
 	_board(new Board(boardSize, this)),
 	_ui(_board, _controls)
@@ -29,8 +28,8 @@ void Chess::run() {
 		std::cout << "Couldn't load " << textBlackName << std::endl;
 	}
 
-	Player player(MoveDir::Up);
-	Player computer(MoveDir::Down);
+	Player player(MoveDir::Up, _chessPieces);
+	Player computer(MoveDir::Down, _chessPieces);
 
 	_chessPieces.push_back(new Pawn(textureWhite, _board->_tiles[0][6], player));
 	_chessPieces.push_back(new Pawn(textureWhite, _board->_tiles[1][6], player));

@@ -5,6 +5,7 @@
 #include "Player.h"
 
 class Tile;
+class Player;
 
 class ChessPiece
 {

@@ -1,19 +1,20 @@
 #pragma once
 #include <vector>
+#include "ChessPiece.h"
+#include "MoveDir.h"
 
-enum MoveDir {
-	Up = -1,
-	Down = 1,
-};
+class ChessPiece;
 
 class Player
 {
 public:
-	Player(MoveDir moveDir);
+	Player(MoveDir moveDir, std::vector<ChessPiece*>& chessPieces);
 	~Player();
 	MoveDir moveDir();
+	std::vector<ChessPiece*> chessPieces();
 
 private:
 	MoveDir _moveDir;
+	std::vector<ChessPiece*>& _chessPieces;
 };
 
