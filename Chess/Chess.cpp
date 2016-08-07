@@ -144,6 +144,18 @@ BestMove Chess::findBestMove(Player& player) {
 	// TODO: Implement this function (there is just test code inside right now).
 
 	// Save all _board._tiles[x][y]._currPiece and _chessPieces[i]._currTile, so we can restore our board after the simulation.
+	std::array<std::array<ChessPiece*, 8>, 8> tileStartPieces;
+	for (int x = 0; x < 8; x++) {
+		for (int y = 0; y < 8; y++) {
+			tileStartPieces[x][y] = _board->tiles()[x][y]->_currPiece;
+		}
+	}
+
+	std::vector<Tile*> chessPiecesStartTiles;
+	for (int i = 0; i < _chessPieces.size(); i++) {
+		chessPiecesStartTiles.push_back(_chessPieces[i]->_currTile);
+	}
+
 
 	// Perform simulation and find the best move
 	player.chessPieces()[0]->move(_board->tiles()[0][2]);
@@ -151,7 +163,17 @@ BestMove Chess::findBestMove(Player& player) {
 	bestMove.piece = _board->tiles()[0][1]->holding();
 	bestMove.newTile = _board->tiles()[0][4];
 
+
 	// Move back everything to the way it was.
+	for (int x = 0; x < 8; x++) {
+		for (int y = 0; y < 8; y++) {
+			_board->tiles()[x][y]->_currPiece = tileStartPieces[x][y];
+		}
+	}
+	for (int i = 0; i < _chessPieces.size(); i++) {
+		_chessPieces[i]->_currTile = chessPiecesStartTiles[i];
+		_chessPieces[i]->update();
+	}
 
 	return bestMove;
 }
