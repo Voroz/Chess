@@ -16,6 +16,7 @@ public:
 	void update();
 	void render(sf::RenderWindow &window);
 	void move(Tile* tile);
+	sf::Sprite& sprite();
 	Player& owner();
 	virtual std::vector<Tile*> possibleMoves() = 0;
 

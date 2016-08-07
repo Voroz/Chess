@@ -41,6 +41,7 @@ void ChessPiece::move(Tile* tile) {
 	}
 	if (!tileFound) {
 		std::cout << "Invalid move" << std::endl;
+		update();
 		return;
 	}
 	if (tile->holding() != nullptr) {
@@ -60,4 +61,7 @@ void ChessPiece::move(Tile* tile) {
 }
 Player& ChessPiece::owner() {
 	return _owner;
+}
+sf::Sprite& ChessPiece::sprite() {
+	return _sprite;
 }

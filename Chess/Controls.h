@@ -3,6 +3,6 @@
 
 struct Controls {
 	Vector2<float> _mousePos;
-	bool _mouseLeft;
-	bool _mouseRight;
+	bool _mouseLeft = false;
+	bool _mouseRight = false;
 };

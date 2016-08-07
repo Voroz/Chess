@@ -32,4 +32,8 @@ void Ui::update() {
 		_draggedPiece->move(mouseOnTile());
 		_draggedPiece = nullptr;
 	}
+	if (_draggedPiece != nullptr) {
+		_draggedPiece->sprite().setPosition(_controls._mousePos.x - _draggedPiece->sprite().getGlobalBounds().width / 2,
+			_controls._mousePos.y - _draggedPiece->sprite().getGlobalBounds().height / 2);
+	}
 }

@@ -42,6 +42,8 @@ void Chess::run() {
 	_chessPieces.push_back(new Bishop(texture, _board->_tiles[2][7], player));
 	_chessPieces.push_back(new Bishop(texture, _board->_tiles[5][7], player));
 
+	_chessPieces.push_back(new Pawn(texture, _board->_tiles[2][1], computer));
+
 	// Debug test
 	/*std::vector<Tile*> tiles = _chessPieces.back()->possibleMoves();
 	for (auto t : tiles) {
