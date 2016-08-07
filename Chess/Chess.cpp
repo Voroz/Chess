@@ -66,8 +66,8 @@ void Chess::run() {
 				} break;
 
 				case sf::Event::MouseMoved: {
-					controls._mousePos.x = event.mouseButton.x;
-					controls._mousePos.y = event.mouseButton.y;
+					controls._mousePos.x = sf::Mouse::getPosition(*_window).x;
+					controls._mousePos.y = sf::Mouse::getPosition(*_window).y;
 				} break;
 
 				case sf::Event::MouseButtonPressed: {
@@ -105,6 +105,8 @@ void Chess::run() {
 				} break;
 			}
 		}
+
+		ui.update();
 
 		_window->clear();
 		render();
