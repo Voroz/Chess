@@ -13,17 +13,17 @@ public:
 	friend class Board;
 	friend class Chess;
 	friend class ChessPiece;
-	Tile(Board* boardPtr);
+	Tile(Board& boardPtr);
 	~Tile();
 	ChessPiece* holding();
-	Board* board();
+	Board& board();
 	Vector2<int> index();
 	bool contains(Vector2<float> point);
 	void syncShape();
 	void render(sf::RenderWindow &window);
 
 private:
-	Board* _boardPtr;
+	Board& _boardPtr;
 	ChessPiece* _currPiece;
 	Vector2<int> _index;
 	Vector2<float> _pos;

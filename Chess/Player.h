@@ -9,7 +9,7 @@ class ChessPiece;
 class Player
 {
 public:
-	Player(MoveDir moveDir, std::vector<ChessPiece*>& chessPieces);
+	Player(MoveDir moveDir, std::vector<ChessPiece*>& activeChessPieces);
 	~Player();
 	MoveDir moveDir();
 	std::vector<ChessPiece*> chessPieces();

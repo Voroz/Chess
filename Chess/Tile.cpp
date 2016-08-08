@@ -2,7 +2,7 @@
 
 
 
-Tile::Tile(Board* boardPtr) :
+Tile::Tile(Board& boardPtr) :
 	_currPiece(nullptr),
 	_boardPtr(boardPtr)
 {
@@ -16,7 +16,7 @@ Tile::~Tile(){
 ChessPiece* Tile::holding() {
 	return _currPiece;
 }
-Board* Tile::board() {
+Board& Tile::board() {
 	return _boardPtr;
 }
 Vector2<int> Tile::index() {

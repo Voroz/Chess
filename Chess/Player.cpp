@@ -2,9 +2,9 @@
 
 
 
-Player::Player(MoveDir moveDir, std::vector<ChessPiece*>& chessPieces) :
+Player::Player(MoveDir moveDir, std::vector<ChessPiece*>& activeChessPieces) :
 	_moveDir(moveDir),
-	_chessPieces(chessPieces)
+	_chessPieces(activeChessPieces)
 {
 
 }

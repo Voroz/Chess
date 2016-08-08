@@ -20,7 +20,7 @@ Board::~Board(){
 void Board::initTiles() {
 	for (int x = 0; x < 8; x++) {
 		for (int y = 0; y < 8; y++) {
-			_tiles[x][y] = new Tile(this);
+			_tiles[x][y] = new Tile(*this);
 			_tiles[x][y]->_index = Vector2<int>(x, y);
 			_tiles[x][y]->_size = Vector2<float>(_size.x / 8, _size.y / 8);
 			_tiles[x][y]->_pos = Vector2<float>(_size.x / 8 * x, _size.y / 8 * y);

@@ -19,7 +19,7 @@ CpType Knight::identify() {
 }
 std::vector<Tile*> Knight::possibleMoves() {
 	std::vector<Tile*> tempVec;
-	std::array<std::array<Tile*, 8>, 8> tiles = _currTile->board()->tiles();
+	std::array<std::array<Tile*, 8>, 8> tiles = _currTile->board().tiles();
 	Vector2<int> index = _currTile->index();
 
 	std::vector<Vector2<int>> testPositions;

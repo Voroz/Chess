@@ -19,7 +19,7 @@ CpType Pawn::identify() {
 }
 std::vector<Tile*> Pawn::possibleMoves() {
 	std::vector<Tile*> tempVec;
-	std::array<std::array<Tile*, 8>, 8> tiles = _currTile->board()->tiles();
+	std::array<std::array<Tile*, 8>, 8> tiles = _currTile->board().tiles();
 	Vector2<int> index = _currTile->index();
 	MoveDir moveDir = _owner.moveDir();
 	// If we havent moved and there is nothing blocking us, we can move forward 1 or 2 steps

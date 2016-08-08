@@ -27,7 +27,9 @@ public:
 
 	void run();
 	std::vector<ChessPiece*>& chessPieces();
-	Move findBestMove(Player& player);
+	std::vector<ChessPiece*>& activeChessPieces();
+	std::vector<ChessPiece*>& inactiveChessPieces();
+	std::vector<Move> findBestMove(Player& player);
 	Tile* mouseOnTile();
 	void update();
 
@@ -38,8 +40,9 @@ private:
 	ChessPiece* _draggedPiece;
 	Player _player;
 	Player _computer;
-	std::vector<ChessPiece*> _chessPieces;
-	Board* _board;
+	std::vector<ChessPiece*> _activeChessPieces;
+	std::vector<ChessPiece*> _inactiveChessPieces;
+	Board _board;
 	Controls _controls;
 };
 

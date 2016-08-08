@@ -21,7 +21,7 @@ std::vector<Tile*> King::possibleMoves() {
 	// TODO: Make this piece unable to move if the move would kill him.
 
 	std::vector<Tile*> tempVec;
-	std::array<std::array<Tile*, 8>, 8> tiles = _currTile->board()->tiles();
+	std::array<std::array<Tile*, 8>, 8> tiles = _currTile->board().tiles();
 	Vector2<int> index = _currTile->index();
 
 	std::vector<Vector2<int>> testPositions;

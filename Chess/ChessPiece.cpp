@@ -47,11 +47,13 @@ int ChessPiece::move(Tile* tile) {
 		return 0;
 	}
 	if (tile->holding() != nullptr) {
-		std::vector<ChessPiece*>& chessPieces = tile->board()->chess()->chessPieces();
-		for (int i = 0; i < chessPieces.size(); i++) {
-			if (chessPieces[i] == tile->holding()) {
-				chessPieces.erase(chessPieces.begin() + i);
-				delete tile->holding();
+		std::vector<ChessPiece*>& activeChessPieces = tile->board().chess()->activeChessPieces();
+		std::vector<ChessPiece*>& inactiveChessPieces = tile->board().chess()->inactiveChessPieces();
+		for (int i = 0; i < activeChessPieces.size(); i++) {
+			if (activeChessPieces[i] == tile->holding()) {
+				tile->holding()->_currTile = nullptr;
+				inactiveChessPieces.push_back(tile->holding());
+				activeChessPieces.erase(activeChessPieces.begin() + i);
 				break;
 			}
 		}
