@@ -33,7 +33,7 @@ void ChessPiece::update() {
 void ChessPiece::render(sf::RenderWindow &window) {
 	window.draw(_sprite);
 }
-void ChessPiece::move(Tile* tile) {
+int ChessPiece::move(Tile* tile) {
 	bool tileFound = false;
 	for (auto t : possibleMoves()) {
 		if (t == tile) {
@@ -44,7 +44,7 @@ void ChessPiece::move(Tile* tile) {
 	if (!tileFound) {
 		std::cout << "Invalid move" << std::endl;
 		update();
-		return;
+		return 0;
 	}
 	if (tile->holding() != nullptr) {
 		std::vector<ChessPiece*>& chessPieces = tile->board()->chess()->chessPieces();
@@ -60,6 +60,7 @@ void ChessPiece::move(Tile* tile) {
 	_currTile = tile;
 	tile->_currPiece = this;
 	update();
+	return 1;
 }
 Player& ChessPiece::owner() {
 	return _owner;
@@ -69,4 +70,7 @@ sf::Sprite& ChessPiece::sprite() {
 }
 int ChessPiece::value() {
 	return _value;
+}
+Tile* ChessPiece::currTile() {
+	return _currTile;
 }

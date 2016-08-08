@@ -25,10 +25,11 @@ public:
 	~ChessPiece();
 	void update();
 	void render(sf::RenderWindow &window);
-	void move(Tile* tile);
+	int move(Tile* tile);
 	sf::Sprite& sprite();
 	Player& owner();
 	int value();
+	Tile* currTile();
 	virtual std::vector<Tile*> possibleMoves() = 0;
 	virtual CpType identify() = 0;
 

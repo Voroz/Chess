@@ -29,8 +29,8 @@ std::vector<Move> Player::possibleMoves() {
 	for (auto cp : chessPieces()) {
 		for (auto pm : cp->possibleMoves()) {
 			Move move;
-			move.piece = cp;
-			move.newTile = pm;
+			move.fromTile = cp->currTile();
+			move.toTile = pm;
 			tempVec.push_back(move);
 		}
 	}

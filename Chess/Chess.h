@@ -2,7 +2,6 @@
 #include <vector>
 #include "Vector2.h"
 #include "Board.h"
-#include "Ui.h"
 #include "Controls.h"
 #include "ChessPiece.h"
 #include "King.h"
@@ -29,16 +28,18 @@ public:
 	void run();
 	std::vector<ChessPiece*>& chessPieces();
 	Move findBestMove(Player& player);
+	Tile* mouseOnTile();
+	void update();
 
 private:
 	void render();
 
 	sf::RenderWindow* _window;
+	ChessPiece* _draggedPiece;
 	Player _player;
 	Player _computer;
 	std::vector<ChessPiece*> _chessPieces;
 	Board* _board;
 	Controls _controls;
-	Ui _ui;
 };
 
