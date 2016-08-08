@@ -150,7 +150,7 @@ Move Chess::findBestMove(Player& player) {
 
 	Move bestMove;
 
-	int bestWorstScore = -4000;
+	int bestWorstScore = -10000;
 	
 	for (auto pm : player.possibleMoves()) {
 
@@ -186,6 +186,7 @@ Move Chess::findBestMove(Player& player) {
 		}
 
 		int worstScore = 100000;
+		
 		pm.fromTile->_currPiece->move(pm.toTile);
 
 
@@ -260,69 +261,10 @@ Move Chess::findBestMove(Player& player) {
 
 				pm2.fromTile->_currPiece->move(pm2.toTile);
 
-				for (auto opm2 : opponent->possibleMoves()) {
-
-					// Copy vector of chessPieces, so we can restore everything later.
-
-					std::vector<ChessPiece*> chessPiecesStart4;
-					for (auto &cp : _chessPieces) {
-						switch (cp->identify()) {
-							case CpType::PawnT: {
-								chessPiecesStart4.push_back(new Pawn(*static_cast<Pawn*>(cp)));
-							} break;
-
-							case CpType::BishopT: {
-								chessPiecesStart4.push_back(new Bishop(*static_cast<Bishop*>(cp)));
-							} break;
-
-							case CpType::KnightT: {
-								chessPiecesStart4.push_back(new Knight(*static_cast<Knight*>(cp)));
-							} break;
-
-							case CpType::RookT: {
-								chessPiecesStart4.push_back(new Rook(*static_cast<Rook*>(cp)));
-							} break;
-
-							case CpType::QueenT: {
-								chessPiecesStart4.push_back(new Queen(*static_cast<Queen*>(cp)));
-							} break;
-
-							case CpType::KingT: {
-								chessPiecesStart4.push_back(new King(*static_cast<King*>(cp)));
-							} break;
-						}
-					}
-
-					opm2.fromTile->_currPiece->move(opm2.toTile);
-
-					if (player.score() - opponent->score() < worstScore) {
-						worstScore = player.score() - opponent->score();
-						std::cout << worstScore << std::endl;
-					}
-					
-
-					// Move back everything to the way it was.
-					// TODO: This part is making the game crash because possibleMoves() uses old addresses, which we delete here.
-
-					for (auto cp : _chessPieces) {
-						delete cp;
-					}
-					_chessPieces = chessPiecesStart4;
-
-					for (int x = 0; x < 8; x++) {
-						for (int y = 0; y < 8; y++) {
-							_board->tiles()[x][y]->_currPiece = nullptr;
-						}
-					}
-
-					for (auto cp : _chessPieces) {
-						cp->_currTile->_currPiece = cp;
-					}
-
-					for (auto cp : _chessPieces) {
-						cp->update();
-					}
+				if (player.score() - opponent->score() < worstScore) {
+					worstScore = player.score() - opponent->score();
 				}
+				
 
 				// Move back everything to the way it was.
 				// TODO: This part is making the game crash because possibleMoves() uses old addresses, which we delete here.
@@ -370,12 +312,6 @@ Move Chess::findBestMove(Player& player) {
 			}
 		}
 
-		if (worstScore > bestWorstScore) {
-			bestWorstScore = worstScore;
-			bestMove = pm;
-			std::cout << "Best Worst score: " << bestWorstScore << std::endl;
-		}
-
 
 		// Move back everything to the way it was.
 		// TODO: This part is making the game crash because possibleMoves() uses old addresses, which we delete here.
@@ -397,6 +333,12 @@ Move Chess::findBestMove(Player& player) {
 
 		for (auto cp : _chessPieces) {
 			cp->update();
+		}
+
+		if (worstScore > bestWorstScore) {
+			bestWorstScore = worstScore;
+			bestMove = pm;
+			std::cout << "Best Worst score: " << bestWorstScore << std::endl;
 		}
 	}
 
