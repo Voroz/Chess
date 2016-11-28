@@ -42,6 +42,6 @@ protected:
 	int _value;
 	bool _active;
 	Tile* _startTile;
-	// Todo: Add _currentTile back again (for performance)
+	Tile* _currTile;
 };
 

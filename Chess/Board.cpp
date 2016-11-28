@@ -19,8 +19,7 @@ Board::~Board(){
 void Board::initTiles() {
 	for (int x = 0; x < 8; x++) {
 		for (int y = 0; y < 8; y++) {
-			_tiles[x][y] = new Tile(*this);
-			_tiles[x][y]->_index = Vector2<int>(x, y);
+			_tiles[x][y] = new Tile(*this, Vector2<int>(x, y));
 			_tiles[x][y]->_size = Vector2<float>(_size.x / 8, _size.y / 8);
 			_tiles[x][y]->_pos = Vector2<float>(_size.x / 8 * x, _size.y / 8 * y);
 			_tiles[x][y]->syncShape();
@@ -42,13 +41,14 @@ std::array<std::array<Tile*, 8>, 8>& Board::tiles() {
 void Board::render(sf::RenderWindow &window) {
 	for (int x = 0; x < 8; x++) {
 		for (int y = 0; y < 8; y++) {
-			_tiles[x][y]->render(window);
-			if (_tiles[x][y]->holding() == nullptr) {
+			Tile* tile = _tiles[x][y];
+			tile->render(window);
+			if (tile->holding() == nullptr) {
 				continue;
 			}
-			_tiles[x][y]->holding()->render(window
-				, Vector2<int>(_tiles[x][y]->_pos.x, _tiles[x][y]->_pos.y)
-				, Vector2<int>(_tiles[x][y]->_size.x, _tiles[x][y]->_size.y));
+			tile->holding()->render(window
+				, Vector2<int>(tile->_pos.x + tile->_size.x / 2, tile->_pos.y + tile->_size.y / 2)
+				, Vector2<int>(tile->_size.x, tile->_size.y));
 		}
 	}
 }

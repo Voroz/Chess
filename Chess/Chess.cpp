@@ -26,43 +26,43 @@ void Chess::run() {
 		std::cout << "Couldn't load " << textBlackName << std::endl;
 	}
 
-	_board._tiles[0][6]->setPiece(&Pawn(textureWhite, _board._tiles[0][6], _player));
-	_board._tiles[1][6]->setPiece(&Pawn(textureWhite, _board._tiles[1][6], _player));
-	_board._tiles[2][6]->setPiece(&Pawn(textureWhite, _board._tiles[2][6], _player));
-	_board._tiles[3][6]->setPiece(&Pawn(textureWhite, _board._tiles[3][6], _player));
-	_board._tiles[4][6]->setPiece(&Pawn(textureWhite, _board._tiles[4][6], _player));
-	_board._tiles[5][6]->setPiece(&Pawn(textureWhite, _board._tiles[5][6], _player));
-	_board._tiles[6][6]->setPiece(&Pawn(textureWhite, _board._tiles[6][6], _player));
-	_board._tiles[7][6]->setPiece(&Pawn(textureWhite, _board._tiles[7][6], _player));
+	_board._tiles[0][6]->setPiece(new Pawn(textureWhite, _board._tiles[0][6], _player));
+	_board._tiles[1][6]->setPiece(new Pawn(textureWhite, _board._tiles[1][6], _player));
+	_board._tiles[2][6]->setPiece(new Pawn(textureWhite, _board._tiles[2][6], _player));
+	_board._tiles[3][6]->setPiece(new Pawn(textureWhite, _board._tiles[3][6], _player));
+	_board._tiles[4][6]->setPiece(new Pawn(textureWhite, _board._tiles[4][6], _player));
+	_board._tiles[5][6]->setPiece(new Pawn(textureWhite, _board._tiles[5][6], _player));
+	_board._tiles[6][6]->setPiece(new Pawn(textureWhite, _board._tiles[6][6], _player));
+	_board._tiles[7][6]->setPiece(new Pawn(textureWhite, _board._tiles[7][6], _player));
 
-	_board._tiles[4][7]->setPiece(&King(textureWhite, _board._tiles[4][7], _player));
-	_board._tiles[3][7]->setPiece(&Queen(textureWhite, _board._tiles[3][7], _player));
-	_board._tiles[0][7]->setPiece(&Rook(textureWhite, _board._tiles[0][7], _player));
-	_board._tiles[7][7]->setPiece(&Rook(textureWhite, _board._tiles[7][7], _player));
+	_board._tiles[4][7]->setPiece(new King(textureWhite, _board._tiles[4][7], _player));
+	_board._tiles[3][7]->setPiece(new Queen(textureWhite, _board._tiles[3][7], _player));
+	_board._tiles[0][7]->setPiece(new Rook(textureWhite, _board._tiles[0][7], _player));
+	_board._tiles[7][7]->setPiece(new Rook(textureWhite, _board._tiles[7][7], _player));
 
-	_board._tiles[1][7]->setPiece(&Knight(textureWhite, _board._tiles[1][7], _player));
-	_board._tiles[6][7]->setPiece(&Knight(textureWhite, _board._tiles[6][7], _player));
-	_board._tiles[2][7]->setPiece(&Bishop(textureWhite, _board._tiles[2][7], _player));
-	_board._tiles[5][7]->setPiece(&Bishop(textureWhite, _board._tiles[5][7], _player));
+	_board._tiles[1][7]->setPiece(new Knight(textureWhite, _board._tiles[1][7], _player));
+	_board._tiles[6][7]->setPiece(new Knight(textureWhite, _board._tiles[6][7], _player));
+	_board._tiles[2][7]->setPiece(new Bishop(textureWhite, _board._tiles[2][7], _player));
+	_board._tiles[5][7]->setPiece(new Bishop(textureWhite, _board._tiles[5][7], _player));
 
-	_board._tiles[0][1]->setPiece(&Pawn(textureBlack, _board._tiles[0][1], _computer));
-	_board._tiles[1][1]->setPiece(&Pawn(textureBlack, _board._tiles[1][1], _computer));
-	_board._tiles[2][1]->setPiece(&Pawn(textureBlack, _board._tiles[2][1], _computer));
-	_board._tiles[3][1]->setPiece(&Pawn(textureBlack, _board._tiles[3][1], _computer));
-	_board._tiles[4][1]->setPiece(&Pawn(textureBlack, _board._tiles[4][1], _computer));
-	_board._tiles[5][1]->setPiece(&Pawn(textureBlack, _board._tiles[5][1], _computer));
-	_board._tiles[6][1]->setPiece(&Pawn(textureBlack, _board._tiles[6][1], _computer));
-	_board._tiles[7][1]->setPiece(&Pawn(textureBlack, _board._tiles[7][1], _computer));
+	_board._tiles[0][1]->setPiece(new Pawn(textureBlack, _board._tiles[0][1], _computer));
+	_board._tiles[1][1]->setPiece(new Pawn(textureBlack, _board._tiles[1][1], _computer));
+	_board._tiles[2][1]->setPiece(new Pawn(textureBlack, _board._tiles[2][1], _computer));
+	_board._tiles[3][1]->setPiece(new Pawn(textureBlack, _board._tiles[3][1], _computer));
+	_board._tiles[4][1]->setPiece(new Pawn(textureBlack, _board._tiles[4][1], _computer));
+	_board._tiles[5][1]->setPiece(new Pawn(textureBlack, _board._tiles[5][1], _computer));
+	_board._tiles[6][1]->setPiece(new Pawn(textureBlack, _board._tiles[6][1], _computer));
+	_board._tiles[7][1]->setPiece(new Pawn(textureBlack, _board._tiles[7][1], _computer));
 
-	_board._tiles[4][0]->setPiece(&King(textureBlack, _board._tiles[4][0], _computer));
-	_board._tiles[3][0]->setPiece(&Queen(textureBlack, _board._tiles[3][0], _computer));
-	_board._tiles[0][0]->setPiece(&Rook(textureBlack, _board._tiles[0][0], _computer));
-	_board._tiles[7][0]->setPiece(&Rook(textureBlack, _board._tiles[7][0], _computer));
+	_board._tiles[4][0]->setPiece(new King(textureBlack, _board._tiles[4][0], _computer));
+	_board._tiles[3][0]->setPiece(new Queen(textureBlack, _board._tiles[3][0], _computer));
+	_board._tiles[0][0]->setPiece(new Rook(textureBlack, _board._tiles[0][0], _computer));
+	_board._tiles[7][0]->setPiece(new Rook(textureBlack, _board._tiles[7][0], _computer));
 
-	_board._tiles[1][0]->setPiece(&Knight(textureBlack, _board._tiles[1][0], _computer));
-	_board._tiles[6][0]->setPiece(&Knight(textureBlack, _board._tiles[6][0], _computer));
-	_board._tiles[2][0]->setPiece(&Bishop(textureBlack, _board._tiles[2][0], _computer));
-	_board._tiles[5][0]->setPiece(&Bishop(textureBlack, _board._tiles[5][0], _computer));
+	_board._tiles[1][0]->setPiece(new Knight(textureBlack, _board._tiles[1][0], _computer));
+	_board._tiles[6][0]->setPiece(new Knight(textureBlack, _board._tiles[6][0], _computer));
+	_board._tiles[2][0]->setPiece(new Bishop(textureBlack, _board._tiles[2][0], _computer));
+	_board._tiles[5][0]->setPiece(new Bishop(textureBlack, _board._tiles[5][0], _computer));
 
 
 	// Debug test
@@ -170,8 +170,8 @@ void Chess::update() {
 			_lastMovedPlayer = &_draggedPiece->owner();
 			std::vector<Move> bestMoves = findBestMove(_computer);
 			// Randomize among equally strong moves
-			int pickedMove = 0 + (rand() % (int)(bestMoves.size()));
-			bestMoves[pickedMove].fromTile->_currPiece->move(bestMoves[pickedMove].toTile, _board.tiles());
+			//int pickedMove = 0 + (rand() % (int)(bestMoves.size()));
+			//bestMoves[pickedMove].fromTile->_currPiece->move(bestMoves[pickedMove].toTile, _board.tiles());
 		}
 		_draggedPiece = nullptr;
 	}

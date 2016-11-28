@@ -13,7 +13,7 @@ public:
 	friend class Board;
 	friend class Chess;
 	friend class ChessPiece;
-	Tile(Board& boardPtr);
+	Tile(Board& boardPtr, Vector2<int> index);
 	~Tile();
 	ChessPiece* holding();
 	void setPiece(ChessPiece* cp);

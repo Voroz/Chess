@@ -4,10 +4,12 @@
 ChessPiece::ChessPiece(sf::Texture& texture, Tile* tile, Player& owner) :
 	_owner(owner),
 	_active(true),
-	_startTile(tile){
+	_startTile(tile),
+	_currTile(tile){
 
 	_sprite.setTexture(&texture);
-	_sprite.setScale(0.25, 0.25);
+	_sprite.setOrigin(tile->_size.x / 2, tile->_size.y / 2);
+	_sprite.setScale(0.9, 0.9);
 
 	if (tile->_currPiece != nullptr) {
 		std::cout << "Tile already occupied" << std::endl;
@@ -21,16 +23,9 @@ ChessPiece::~ChessPiece(){
 
 }
 void ChessPiece::render(sf::RenderWindow &window, Vector2<int> pos, Vector2<int> size) {
-	// TODO: these are temp shapes since the _sprite is not working for some reason...?
-	sf::RectangleShape shape;
-	shape.setSize(sf::Vector2f(size.x, size.y));
-	shape.setPosition(pos.x, pos.y);
-	shape.setTexture(_sprite.getTexture());
-	shape.setTextureRect(_sprite.getTextureRect());
-
-	//_sprite.setPosition(pos.x, pos.y);
-	//_sprite.setSize(sf::Vector2f(size.x, size.y));
-	window.draw(shape);
+	_sprite.setSize(sf::Vector2f(size.x, size.y));
+	_sprite.setPosition(pos.x, pos.y);
+	window.draw(_sprite);
 }
 bool ChessPiece::move(Tile* moveTo, std::array<std::array<Tile*, 8>, 8> tiles) {
 	bool movePossible = false;
@@ -51,6 +46,8 @@ bool ChessPiece::move(Tile* moveTo, std::array<std::array<Tile*, 8>, 8> tiles) {
 	if (moveTo->_currPiece != nullptr) {
 		moveTo->_currPiece->setActive(false);
 	}
+
+	_currTile = moveTo;
 	moveTo->_currPiece = this;
 	return true;
 }

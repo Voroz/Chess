@@ -2,10 +2,10 @@
 
 
 
-Tile::Tile(Board& boardPtr) :
+Tile::Tile(Board& boardPtr, Vector2<int> index) :
 	_currPiece(nullptr),
-	_boardPtr(boardPtr)
-{
+	_boardPtr(boardPtr),
+	_index(index){
 
 }
 

@@ -21,16 +21,7 @@ std::vector<Move> King::possibleMoves(std::array<std::array<Tile*, 8>, 8> tiles)
 
 	std::vector<Move> tempVec;
 	bool found = false;
-	Vector2<int> index;
-
-	for (int i = 0; i < 8; i++) {
-		for (int j = 0; j < 8; j++) {
-			if (tiles[i][j]->holding() == this) {
-				index = Vector2<int>(i, j);
-			}
-		}
-	}
-	assert(found);
+	Vector2<int> index = _currTile->index();
 
 	std::vector<Vector2<int>> testPositions;
 	testPositions.push_back(Vector2<int>(index.x - 1, index.y));
