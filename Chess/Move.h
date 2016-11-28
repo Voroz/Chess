@@ -6,11 +6,16 @@ class ChessPiece;
 class Tile;
 
 struct Move {
+	Move() :
+		fromTile(nullptr),
+		toTile(nullptr) {
+
+	}
 	Move(Tile* from, Tile* to) :
 		fromTile(from),
 		toTile(to){
 
 	}
-	Tile* fromTile = nullptr;
-	Tile* toTile = nullptr;
+	Tile* fromTile;
+	Tile* toTile;
 };

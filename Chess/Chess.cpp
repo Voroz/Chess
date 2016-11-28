@@ -138,15 +138,40 @@ void Chess::run() {
 	}
 }
 
-std::vector<Move> Chess::findBestMove(Player& player) {
+void Chess::findBestMove(Player& player, Move& bestMove, std::vector<Move>& moves, int& bestScore, int depth) {
+	if (depth == 4) {
+		return;
+	}
 
+	Player& otherPlayer = player;
+	if (&player == &_computer) {
+		otherPlayer = _player;
+	}
+	else {
+		otherPlayer = _computer;
+	}
 
-	
-	// Perform simulation and find the best move
+	for (auto cp : player.activeChessPieces(_board.tiles())) {
+		for (auto pm : cp->possibleMoves(_board.tiles())) {
+			// Make move
+			Tile* startPos = cp->_currTile;
+			cp->move(pm.toTile, _board.tiles());
+			moves.push_back(Move(startPos, pm.toTile));
 
-	std::vector<Move> bestMoves;
+			if (_player.score(_board.tiles()) < bestScore) {
+				bestScore = _player.score(_board.tiles());
+				bestMove = moves[0];
+			}
+			findBestMove(otherPlayer, bestMove, moves, bestScore, depth + 1);
 
-	return bestMoves;
+			// Restore piece
+			cp->_currTile->_currPiece = nullptr;
+			cp->_currTile = startPos;
+			cp->_currTile->_currPiece = cp;
+		}
+	}
+
+	return;
 }
 Tile* Chess::mouseOnTile() {
 	std::array<std::array<Tile*, 8>, 8>& tiles = _board.tiles();
@@ -179,13 +204,18 @@ void Chess::update() {
 		}
 	}
 	if (!_controls._mouseLeft && _draggedPiece != nullptr) {
+
 		if (_draggedPiece->move(mouseOnTile(), _board.tiles())) {
+
 			_lastMovedPlayer = &_draggedPiece->owner();
-			std::vector<Move> bestMoves = findBestMove(_computer);
-			// Randomize among equally strong moves
-			//int pickedMove = 0 + (rand() % (int)(bestMoves.size()));
-			//bestMoves[pickedMove].fromTile->_currPiece->move(bestMoves[pickedMove].toTile, _board.tiles());
+			Move bestMove;
+			std::vector<Move> moves;
+			int bestScore = 10000;
+
+			findBestMove(_computer, bestMove, moves, bestScore);
+			bestMove.fromTile->_currPiece->move(bestMove.toTile, _board.tiles());
 		}
+
 		_draggedPiece = nullptr;
 	}
 	if (_draggedPiece != nullptr) {

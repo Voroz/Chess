@@ -19,7 +19,7 @@ std::vector<ChessPiece*> Player::activeChessPieces(std::array<std::array<Tile*, 
 	for (int i = 0; i < 8; i++) {
 		for (int j = 0; j < 8; j++) {
 			ChessPiece* cp = tiles[i][j]->holding();
-			if (&(cp->owner()) != this || !cp->active()) {
+			if (cp == nullptr || &(cp->owner()) != this || !cp->active()) {
 				continue;
 			}
 			tempVec.push_back(cp);
