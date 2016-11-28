@@ -9,6 +9,8 @@ ChessPiece::ChessPiece(sf::Texture& texture, Tile* tile, Player& owner) :
 
 	_sprite.setTexture(&texture);
 	_sprite.setOrigin(tile->_size.x / 2, tile->_size.y / 2);
+	_sprite.setSize(sf::Vector2f(tile->_size.x, tile->_size.y));
+	_sprite.setPosition(tile->_pos.x + tile->_size.x / 2, tile->_pos.y + tile->_size.y / 2);
 	_sprite.setScale(0.9, 0.9);
 
 	if (tile->_currPiece != nullptr) {
@@ -22,9 +24,7 @@ ChessPiece::ChessPiece(sf::Texture& texture, Tile* tile, Player& owner) :
 ChessPiece::~ChessPiece(){
 
 }
-void ChessPiece::render(sf::RenderWindow &window, Vector2<int> pos, Vector2<int> size) {
-	_sprite.setSize(sf::Vector2f(size.x, size.y));
-	_sprite.setPosition(pos.x, pos.y);
+void ChessPiece::render(sf::RenderWindow &window) {
 	window.draw(_sprite);
 }
 bool ChessPiece::move(Tile* moveTo, std::array<std::array<Tile*, 8>, 8> tiles) {
@@ -47,8 +47,9 @@ bool ChessPiece::move(Tile* moveTo, std::array<std::array<Tile*, 8>, 8> tiles) {
 		moveTo->_currPiece->setActive(false);
 	}
 
+	_currTile->_currPiece = nullptr;
 	_currTile = moveTo;
-	moveTo->_currPiece = this;
+	_currTile->_currPiece = this;
 	return true;
 }
 Player& ChessPiece::owner() {
@@ -65,4 +66,7 @@ bool ChessPiece::active() {
 }
 void ChessPiece::setActive(bool active) {
 	_active = active;
+}
+void ChessPiece::setPosition(int x, int y) {
+	_sprite.setPosition(x, y);
 }

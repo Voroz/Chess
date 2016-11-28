@@ -26,7 +26,8 @@ public:
 	friend class Chess;
 	ChessPiece(sf::Texture& texture, Tile* tile, Player& owner);
 	~ChessPiece();
-	void render(sf::RenderWindow &window, Vector2<int> pos, Vector2<int> size);
+	void render(sf::RenderWindow &window);
+	void setPosition(int x, int y);
 	bool move(Tile* tile, std::array<std::array<Tile*, 8>, 8> tiles);
 	sf::RectangleShape& sprite();
 	Player& owner();

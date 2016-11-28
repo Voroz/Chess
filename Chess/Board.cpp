@@ -46,9 +46,7 @@ void Board::render(sf::RenderWindow &window) {
 			if (tile->holding() == nullptr) {
 				continue;
 			}
-			tile->holding()->render(window
-				, Vector2<int>(tile->_pos.x + tile->_size.x / 2, tile->_pos.y + tile->_size.y / 2)
-				, Vector2<int>(tile->_size.x, tile->_size.y));
+			tile->holding()->render(window);
 		}
 	}
 }
