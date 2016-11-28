@@ -43,10 +43,6 @@ void Board::render(sf::RenderWindow &window) {
 		for (int y = 0; y < 8; y++) {
 			Tile* tile = _tiles[x][y];
 			tile->render(window);
-			if (tile->holding() == nullptr) {
-				continue;
-			}
-			tile->holding()->render(window);
 		}
 	}
 }

@@ -40,6 +40,7 @@ bool ChessPiece::move(Tile* moveTo, std::array<std::array<Tile*, 8>, 8> tiles) {
 	}
 	if (!movePossible) {
 		std::cout << "Invalid move" << std::endl;
+		_sprite.setPosition(_currTile->_pos.x + _currTile->_size.x / 2, _currTile->_pos.y + _currTile->_size.y / 2);
 		return false;
 	}
 
@@ -50,6 +51,7 @@ bool ChessPiece::move(Tile* moveTo, std::array<std::array<Tile*, 8>, 8> tiles) {
 	_currTile->_currPiece = nullptr;
 	_currTile = moveTo;
 	_currTile->_currPiece = this;
+	_sprite.setPosition(_currTile->_pos.x + _currTile->_size.x / 2, _currTile->_pos.y + _currTile->_size.y / 2);
 	return true;
 }
 Player& ChessPiece::owner() {

@@ -34,6 +34,7 @@ public:
 private:
 	void render();
 
+	std::vector<ChessPiece*> _chessPieces;
 	sf::RenderWindow* _window;
 	ChessPiece* _draggedPiece;
 	Player _player;
