@@ -9,7 +9,7 @@ public:
 	~Rook();
 
 	CpType identify();
-	std::vector<Tile*> possibleMoves();
+	std::vector<Move> possibleMoves(std::array<std::array<Tile*, 8>, 8> tiles);
 };
 
 

@@ -2,10 +2,8 @@
 
 
 
-Player::Player(MoveDir moveDir, std::vector<ChessPiece*>& activeChessPieces) :
-	_moveDir(moveDir),
-	_chessPieces(activeChessPieces)
-{
+Player::Player(MoveDir moveDir) :
+	_moveDir(moveDir){
 
 }
 Player::~Player(){
@@ -15,30 +13,35 @@ Player::~Player(){
 MoveDir Player::moveDir() {
 	return _moveDir;
 }
-std::vector<ChessPiece*> Player::chessPieces() {
+std::vector<ChessPiece*> Player::activeChessPieces(std::array<std::array<Tile*, 8>, 8> tiles) {
 	std::vector<ChessPiece*> tempVec;
-	for (auto cp : _chessPieces) {
-		if (&cp->owner() == this) {
+
+	for (int i = 0; i < 8; i++) {
+		for (int j = 0; j < 8; j++) {
+			ChessPiece* cp = tiles[i][j]->holding();
+			if (&(cp->owner()) != this || !cp->active()) {
+				continue;
+			}
 			tempVec.push_back(cp);
 		}
 	}
+
 	return tempVec;
 }
-std::vector<Move> Player::possibleMoves() {
+std::vector<Move> Player::possibleMoves(std::array<std::array<Tile*, 8>, 8> tiles) {
 	std::vector<Move> tempVec;
-	for (auto cp : chessPieces()) {
-		for (auto pm : cp->possibleMoves()) {
-			Move move;
-			move.fromTile = cp->currTile();
-			move.toTile = pm;
-			tempVec.push_back(move);
+
+	for (auto cp : activeChessPieces(tiles)) {
+		for (auto pm : cp->possibleMoves(tiles)) {
+			tempVec.push_back(pm);
 		}
 	}
+
 	return tempVec;
 }
-int Player::score() {
+int Player::score(std::array<std::array<Tile*, 8>, 8> tiles) {
 	int score = 0;
-	for (auto cp : chessPieces()) {
+	for (auto cp : activeChessPieces(tiles)) {
 		score += cp->value();
 	}
 	return score;

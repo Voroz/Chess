@@ -15,6 +15,7 @@
 #include "SFML/Window.hpp"
 #include "SFML/System.hpp"
 #include "Move.h"
+#include <vector>
 
 class Board;
 class ChessPiece;
@@ -26,9 +27,6 @@ public:
 	~Chess();
 
 	void run();
-	std::vector<ChessPiece*>& chessPieces();
-	std::vector<ChessPiece*>& activeChessPieces();
-	std::vector<ChessPiece*>& inactiveChessPieces();
 	std::vector<Move> findBestMove(Player& player);
 	Tile* mouseOnTile();
 	void update();
@@ -40,8 +38,7 @@ private:
 	ChessPiece* _draggedPiece;
 	Player _player;
 	Player _computer;
-	std::vector<ChessPiece*> _activeChessPieces;
-	std::vector<ChessPiece*> _inactiveChessPieces;
+	Player* _lastMovedPlayer;
 	Board _board;
 	Controls _controls;
 };

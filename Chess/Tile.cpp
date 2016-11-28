@@ -16,6 +16,9 @@ Tile::~Tile(){
 ChessPiece* Tile::holding() {
 	return _currPiece;
 }
+void Tile::setPiece(ChessPiece* cp) {
+	_currPiece = cp;
+}
 Board& Tile::board() {
 	return _boardPtr;
 }

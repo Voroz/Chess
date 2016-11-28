@@ -2,8 +2,7 @@
 #include "Chess.h"
 
 
-Board::Board(Vector2<float> size, Chess* chessPtr) :
-	_chessPtr(chessPtr),
+Board::Board(Vector2<float> size) :
 	_size(size)
 {
 	initTiles();
@@ -37,9 +36,6 @@ void Board::initTiles() {
 		}
 	}
 }
-Chess* Board::chess() {
-	return _chessPtr;
-}
 std::array<std::array<Tile*, 8>, 8>& Board::tiles() {
 	return _tiles;
 }
@@ -47,6 +43,12 @@ void Board::render(sf::RenderWindow &window) {
 	for (int x = 0; x < 8; x++) {
 		for (int y = 0; y < 8; y++) {
 			_tiles[x][y]->render(window);
+			if (_tiles[x][y]->holding() == nullptr) {
+				continue;
+			}
+			_tiles[x][y]->holding()->render(window
+				, Vector2<int>(_tiles[x][y]->_pos.x, _tiles[x][y]->_pos.y)
+				, Vector2<int>(_tiles[x][y]->_size.x, _tiles[x][y]->_size.y));
 		}
 	}
 }

@@ -1,14 +1,12 @@
 #include "ChessPiece.h"
-#include "Chess.h"
-
 
 
 ChessPiece::ChessPiece(sf::Texture& texture, Tile* tile, Player& owner) :
-	_currTile(nullptr),
-	_startTile(_currTile),
-	_owner(owner)
-{
-	_sprite.setTexture(texture);
+	_owner(owner),
+	_active(true),
+	_startTile(tile){
+
+	_sprite.setTexture(&texture);
 	_sprite.setScale(0.25, 0.25);
 
 	if (tile->_currPiece != nullptr) {
@@ -16,63 +14,58 @@ ChessPiece::ChessPiece(sf::Texture& texture, Tile* tile, Player& owner) :
 	}
 	else {
 		tile->_currPiece = this;
-		_currTile = tile;
-		_startTile = _currTile;
-		update();
 	}
 }
 
 ChessPiece::~ChessPiece(){
 
 }
+void ChessPiece::render(sf::RenderWindow &window, Vector2<int> pos, Vector2<int> size) {
+	// TODO: these are temp shapes since the _sprite is not working for some reason...?
+	sf::RectangleShape shape;
+	shape.setSize(sf::Vector2f(size.x, size.y));
+	shape.setPosition(pos.x, pos.y);
+	shape.setTexture(_sprite.getTexture());
+	shape.setTextureRect(_sprite.getTextureRect());
 
-void ChessPiece::update() {
-	_sprite.setPosition(_currTile->_pos.x + _currTile->_size.x / 2 - _sprite.getGlobalBounds().width / 2,
-		_currTile->_pos.y + _currTile->_size.y / 2 - _sprite.getGlobalBounds().height / 2);
+	//_sprite.setPosition(pos.x, pos.y);
+	//_sprite.setSize(sf::Vector2f(size.x, size.y));
+	window.draw(shape);
 }
-void ChessPiece::render(sf::RenderWindow &window) {
-	window.draw(_sprite);
-}
-int ChessPiece::move(Tile* tile) {
-	bool tileFound = false;
-	for (auto t : possibleMoves()) {
-		if (t == tile) {
-			tileFound = true;
+bool ChessPiece::move(Tile* moveTo, std::array<std::array<Tile*, 8>, 8> tiles) {
+	bool movePossible = false;
+	std::vector<Move> moves;
+	moves = possibleMoves(tiles);
+
+	for (auto pm : possibleMoves(tiles)) {
+		if (pm.toTile == moveTo) {
+			movePossible = true;
 			break;
 		}
 	}
-	if (!tileFound) {
+	if (!movePossible) {
 		std::cout << "Invalid move" << std::endl;
-		update();
-		return 0;
+		return false;
 	}
-	if (tile->holding() != nullptr) {
-		std::vector<ChessPiece*>& activeChessPieces = tile->board().chess()->activeChessPieces();
-		std::vector<ChessPiece*>& inactiveChessPieces = tile->board().chess()->inactiveChessPieces();
-		for (int i = 0; i < activeChessPieces.size(); i++) {
-			if (activeChessPieces[i] == tile->holding()) {
-				tile->holding()->_currTile = nullptr;
-				inactiveChessPieces.push_back(tile->holding());
-				activeChessPieces.erase(activeChessPieces.begin() + i);
-				break;
-			}
-		}
+
+	if (moveTo->_currPiece != nullptr) {
+		moveTo->_currPiece->setActive(false);
 	}
-	_currTile->_currPiece = nullptr;
-	_currTile = tile;
-	tile->_currPiece = this;
-	update();
-	return 1;
+	moveTo->_currPiece = this;
+	return true;
 }
 Player& ChessPiece::owner() {
 	return _owner;
 }
-sf::Sprite& ChessPiece::sprite() {
+sf::RectangleShape& ChessPiece::sprite() {
 	return _sprite;
 }
 int ChessPiece::value() {
 	return _value;
 }
-Tile* ChessPiece::currTile() {
-	return _currTile;
+bool ChessPiece::active() {
+	return _active;
+}
+void ChessPiece::setActive(bool active) {
+	_active = active;
 }

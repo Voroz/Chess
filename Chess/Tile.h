@@ -16,6 +16,7 @@ public:
 	Tile(Board& boardPtr);
 	~Tile();
 	ChessPiece* holding();
+	void setPiece(ChessPiece* cp);
 	Board& board();
 	Vector2<int> index();
 	bool contains(Vector2<float> point);

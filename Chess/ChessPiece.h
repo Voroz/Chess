@@ -3,6 +3,9 @@
 #include <iostream>
 #include "SFML/Graphics.hpp"
 #include "Player.h"
+#include <assert.h>
+#include "Move.h"
+#include "Vector2.h"
 
 enum CpType {
 	PawnT = 0,
@@ -23,21 +26,22 @@ public:
 	friend class Chess;
 	ChessPiece(sf::Texture& texture, Tile* tile, Player& owner);
 	~ChessPiece();
-	void update();
-	void render(sf::RenderWindow &window);
-	int move(Tile* tile);
-	sf::Sprite& sprite();
+	void render(sf::RenderWindow &window, Vector2<int> pos, Vector2<int> size);
+	bool move(Tile* tile, std::array<std::array<Tile*, 8>, 8> tiles);
+	sf::RectangleShape& sprite();
 	Player& owner();
 	int value();
-	Tile* currTile();
-	virtual std::vector<Tile*> possibleMoves() = 0;
+	virtual std::vector<Move> possibleMoves(std::array<std::array<Tile*, 8>, 8> tiles) = 0;
 	virtual CpType identify() = 0;
+	bool active();
+	void setActive(bool active);
 
 protected:
 	Player& _owner;
-	Tile* _currTile;
-	Tile* _startTile;
-	sf::Sprite _sprite;
+	sf::RectangleShape _sprite;
 	int _value;
+	bool _active;
+	Tile* _startTile;
+	// Todo: Add _currentTile back again (for performance)
 };
 
