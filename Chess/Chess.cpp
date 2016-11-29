@@ -235,7 +235,7 @@ void Chess::update() {
 		_draggedPiece = nullptr;
 	}
 	if (_draggedPiece != nullptr) {
-		_draggedPiece->sprite().setPosition(_controls._mousePos.x - _draggedPiece->sprite().getGlobalBounds().width / 2
+		_draggedPiece->setPosition(_controls._mousePos.x - _draggedPiece->sprite().getGlobalBounds().width / 2
 			+ _draggedPiece->sprite().getSize().x / 2,
 			_controls._mousePos.y - _draggedPiece->sprite().getGlobalBounds().height / 2
 			+ _draggedPiece->sprite().getSize().y / 2);

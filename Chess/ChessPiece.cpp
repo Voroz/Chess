@@ -11,7 +11,7 @@ ChessPiece::ChessPiece(sf::Texture& texture, Tile* tile, Player& owner) :
 	_sprite.setOrigin(tile->_size.x / 2, tile->_size.y / 2);
 	_sprite.setSize(sf::Vector2f(tile->_size.x, tile->_size.y));
 	_sprite.setScale(0.9, 0.9);
-	_sprite.setPosition(tile->_pos.x + tile->_size.x / 2, tile->_pos.y + tile->_size.y / 2);
+	setPosition(tile->_pos.x + tile->_size.x / 2, tile->_pos.y + tile->_size.y / 2);
 
 	if (tile->_currPiece != nullptr) {
 		std::cout << "Tile already occupied" << std::endl;
@@ -38,7 +38,7 @@ bool ChessPiece::move(Tile* moveTo, std::array<std::array<Tile*, 8>, 8> tiles) {
 	}
 	if (!movePossible) {
 		std::cout << "Invalid move" << std::endl;
-		_sprite.setPosition(_currTile->_pos.x + _currTile->_size.x / 2, _currTile->_pos.y + _currTile->_size.y / 2);
+		setPosition(_currTile->_pos.x + _currTile->_size.x / 2, _currTile->_pos.y + _currTile->_size.y / 2);
 		return false;
 	}
 
@@ -49,7 +49,7 @@ bool ChessPiece::move(Tile* moveTo, std::array<std::array<Tile*, 8>, 8> tiles) {
 	_currTile = moveTo;
 	moveTo->_currPiece = this;
 
-	_sprite.setPosition(_currTile->_pos.x + _currTile->_size.x / 2, _currTile->_pos.y + _currTile->_size.y / 2);
+	setPosition(_currTile->_pos.x + _currTile->_size.x / 2, _currTile->_pos.y + _currTile->_size.y / 2);
 	return true;
 }
 Player& ChessPiece::owner() {
