@@ -3,7 +3,8 @@
 
 
 Player::Player(MoveDir moveDir) :
-	_moveDir(moveDir){
+	_moveDir(moveDir),
+	_bestScore(0){
 
 }
 Player::~Player(){

@@ -138,36 +138,42 @@ void Chess::run() {
 	}
 }
 
-void Chess::findBestMove(Player& player, Move& bestMove, std::vector<Move>& moves, int& bestScore, int depth) {
+void Chess::findBestMove(Player* player, int depth) {
 	if (depth == 4) {
 		return;
 	}
 
-	Player& otherPlayer = player;
-	if (&player == &_computer) {
-		otherPlayer = _player;
+	Player* otherPlayer = player;
+	if (player == &_computer) {
+		otherPlayer = &_player;
 	}
 	else {
-		otherPlayer = _computer;
+		otherPlayer = &_computer;
 	}
 
-	for (auto cp : player.activeChessPieces(_board.tiles())) {
+	for (auto cp : player->activeChessPieces(_board.tiles())) {
 		for (auto pm : cp->possibleMoves(_board.tiles())) {
 			// Make move
-			Tile* startPos = cp->_currTile;
+			ChessPiece* endPosPiece = pm.toTile->_currPiece;
 			cp->move(pm.toTile, _board.tiles());
-			moves.push_back(Move(startPos, pm.toTile));
+			player->_moves.push_back(Move(pm.fromTile, pm.toTile));
 
-			if (_player.score(_board.tiles()) < bestScore) {
-				bestScore = _player.score(_board.tiles());
-				bestMove = moves[0];
+			if (player->score(_board.tiles()) > player->_bestScore) {
+				player->_bestScore = player->score(_board.tiles());
+				player->_bestMove = player->_moves[0];
 			}
-			findBestMove(otherPlayer, bestMove, moves, bestScore, depth + 1);
+			findBestMove(otherPlayer, depth + 1);
 
 			// Restore piece
-			cp->_currTile->_currPiece = nullptr;
-			cp->_currTile = startPos;
-			cp->_currTile->_currPiece = cp;
+			cp->_currTile = pm.fromTile;
+			pm.fromTile->_currPiece = cp;
+			pm.toTile->_currPiece = endPosPiece;
+			if (endPosPiece != nullptr) {
+				endPosPiece->setActive(true);
+			}
+			// TODO: Change the way we update position of chesspieces everywhere.
+			cp->setPosition(pm.fromTile->_pos.x + pm.fromTile->_size.x / 2, pm.fromTile->_pos.y + pm.fromTile->_size.y / 2);
+			player->_moves.pop_back();
 		}
 	}
 
@@ -208,12 +214,14 @@ void Chess::update() {
 		if (_draggedPiece->move(mouseOnTile(), _board.tiles())) {
 
 			_lastMovedPlayer = &_draggedPiece->owner();
-			Move bestMove;
-			std::vector<Move> moves;
-			int bestScore = 10000;
 
-			findBestMove(_computer, bestMove, moves, bestScore);
-			bestMove.fromTile->_currPiece->move(bestMove.toTile, _board.tiles());
+			_computer._bestScore = 0;
+			_computer._moves.clear();
+			_player._bestScore = 0;
+			_player._moves.clear();
+
+			findBestMove(&_computer);
+			_computer._bestMove.fromTile->_currPiece->move(_computer._bestMove.toTile, _board.tiles());
 		}
 
 		_draggedPiece = nullptr;

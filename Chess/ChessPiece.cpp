@@ -29,8 +29,6 @@ void ChessPiece::render(sf::RenderWindow &window) {
 }
 bool ChessPiece::move(Tile* moveTo, std::array<std::array<Tile*, 8>, 8> tiles) {
 	bool movePossible = false;
-	std::vector<Move> moves;
-	moves = possibleMoves(tiles);
 
 	for (auto pm : possibleMoves(tiles)) {
 		if (pm.toTile == moveTo) {
@@ -47,10 +45,10 @@ bool ChessPiece::move(Tile* moveTo, std::array<std::array<Tile*, 8>, 8> tiles) {
 	if (moveTo->_currPiece != nullptr) {
 		moveTo->_currPiece->setActive(false);
 	}
-
 	_currTile->_currPiece = nullptr;
 	_currTile = moveTo;
-	_currTile->_currPiece = this;
+	moveTo->_currPiece = this;
+
 	_sprite.setPosition(_currTile->_pos.x + _currTile->_size.x / 2, _currTile->_pos.y + _currTile->_size.y / 2);
 	return true;
 }

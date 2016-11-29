@@ -16,6 +16,11 @@ public:
 	std::vector<Move> possibleMoves(std::array<std::array<Tile*, 8>, 8> tiles);
 	int score(std::array<std::array<Tile*, 8>, 8> tiles);
 
+	// TODO: don't save these here (temp solution to get findBestMove to work)
+	int _bestScore;
+	Move _bestMove;
+	std::vector<Move> _moves;
+
 private:
 	MoveDir _moveDir;
 };
