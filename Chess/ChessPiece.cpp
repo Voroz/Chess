@@ -10,8 +10,8 @@ ChessPiece::ChessPiece(sf::Texture& texture, Tile* tile, Player& owner) :
 	_sprite.setTexture(&texture);
 	_sprite.setOrigin(tile->_size.x / 2, tile->_size.y / 2);
 	_sprite.setSize(sf::Vector2f(tile->_size.x, tile->_size.y));
-	_sprite.setPosition(tile->_pos.x + tile->_size.x / 2, tile->_pos.y + tile->_size.y / 2);
 	_sprite.setScale(0.9, 0.9);
+	_sprite.setPosition(tile->_pos.x + tile->_size.x / 2, tile->_pos.y + tile->_size.y / 2);
 
 	if (tile->_currPiece != nullptr) {
 		std::cout << "Tile already occupied" << std::endl;
