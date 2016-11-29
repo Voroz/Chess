@@ -139,7 +139,7 @@ void Chess::run() {
 }
 
 void Chess::findBestMove(Player* player, int depth) {
-	if (depth == 4) {
+	if (depth == 0) {
 		return;
 	}
 
@@ -162,7 +162,7 @@ void Chess::findBestMove(Player* player, int depth) {
 				player->_bestScore = player->score(_board.tiles()) - otherPlayer->score(_board.tiles());
 				player->_bestMove = player->_moves[0];
 			}
-			findBestMove(otherPlayer, depth + 1);
+			findBestMove(otherPlayer, depth - 1);
 
 			// Restore piece
 			cp->_currTile = pm.fromTile;
@@ -215,12 +215,12 @@ void Chess::update() {
 
 			_lastMovedPlayer = &_draggedPiece->owner();
 
-			_computer._bestScore = 0;
+			_computer._bestScore = -10000;
 			_computer._moves.clear();
-			_player._bestScore = 0;
+			_player._bestScore = -10000;
 			_player._moves.clear();
 
-			findBestMove(&_computer);
+			findBestMove(&_computer, 4);
 			_computer._bestMove.fromTile->_currPiece->move(_computer._bestMove.toTile, _board.tiles());
 		}
 

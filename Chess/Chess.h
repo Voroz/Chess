@@ -27,7 +27,7 @@ public:
 	~Chess();
 
 	void run();
-	void findBestMove(Player* player, int depth = 0);
+	void findBestMove(Player* player, int depth);
 	Tile* mouseOnTile();
 	void update();
 
