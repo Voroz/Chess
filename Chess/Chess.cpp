@@ -139,6 +139,7 @@ void Chess::run() {
 }
 
 void Chess::findBestMove(Player* player, int depth) {
+
 	if (depth == 0) {
 		return;
 	}
@@ -158,11 +159,12 @@ void Chess::findBestMove(Player* player, int depth) {
 			cp->move(pm.toTile, _board.tiles());
 			player->_moves.push_back(Move(pm.fromTile, pm.toTile));
 
-			if (player->score(_board.tiles()) - otherPlayer->score(_board.tiles()) > player->_bestScore) {
+			findBestMove(otherPlayer, depth - 1);
+
+			if (player->score(_board.tiles()) - otherPlayer->_bestScore) {
 				player->_bestScore = player->score(_board.tiles()) - otherPlayer->score(_board.tiles());
 				player->_bestMove = player->_moves[0];
 			}
-			findBestMove(otherPlayer, depth - 1);
 
 			// Restore piece
 			cp->_currTile = pm.fromTile;
@@ -171,9 +173,9 @@ void Chess::findBestMove(Player* player, int depth) {
 			if (endPosPiece != nullptr) {
 				endPosPiece->setActive(true);
 			}
+			player->_moves.pop_back();
 			// TODO: Change the way we update position of chesspieces everywhere.
 			cp->setPosition(pm.fromTile->_pos.x + pm.fromTile->_size.x / 2, pm.fromTile->_pos.y + pm.fromTile->_size.y / 2);
-			player->_moves.pop_back();
 		}
 	}
 
