@@ -138,11 +138,7 @@ void Chess::run() {
 	}
 }
 
-void Chess::findBestMove(Player* player, int depth) {
-
-	if (depth == 0) {
-		return;
-	}
+int Chess::findBestMove(Player* player, int depth) {
 
 	Player* otherPlayer = player;
 	if (player == &_computer) {
@@ -152,24 +148,18 @@ void Chess::findBestMove(Player* player, int depth) {
 		otherPlayer = &_computer;
 	}
 
+	if (depth == 0) {
+		return (player->score(_board.tiles()) - otherPlayer->score(_board.tiles()));
+	}
+
 	for (auto cp : player->activeChessPieces(_board.tiles())) {
 		for (auto pm : cp->possibleMoves(_board.tiles())) {
 			// Make move
 			ChessPiece* endPosPiece = pm.toTile->_currPiece;
 			cp->move(pm.toTile, _board.tiles());
-			player->_moves.push_back(Move(pm.fromTile, pm.toTile));
 
-			findBestMove(otherPlayer, depth - 1);
-
-			if (depth == 1) {
-				if (player->score(_board.tiles()) - otherPlayer->score(_board.tiles()) >= player->_bestScore) {
-					player->_bestScore = player->score(_board.tiles()) - otherPlayer->score(_board.tiles());
-					player->_bestMove = player->_moves[0];
-				}
-				if (otherPlayer->score(_board.tiles()) - player->score(_board.tiles()) >= otherPlayer->_bestScore) {
-					otherPlayer->_bestScore = otherPlayer->score(_board.tiles()) - player->score(_board.tiles());
-					otherPlayer->_bestMove = otherPlayer->_moves[0];
-				}
+			if (findBestMove(otherPlayer, depth - 1) > player->_bestScore) {
+				player->_bestMove = Move(pm.fromTile, pm.toTile);
 			}
 
 			// Restore piece
@@ -179,13 +169,12 @@ void Chess::findBestMove(Player* player, int depth) {
 			if (endPosPiece != nullptr) {
 				endPosPiece->setActive(true);
 			}
-			player->_moves.pop_back();
 			// TODO: Change the way we update position of chesspieces everywhere.
 			cp->setPosition(pm.fromTile->_pos.x + pm.fromTile->_size.x / 2, pm.fromTile->_pos.y + pm.fromTile->_size.y / 2);
 		}
 	}
 
-	return;
+	return (player->score(_board.tiles()) - otherPlayer->score(_board.tiles()));
 }
 Tile* Chess::mouseOnTile() {
 	std::array<std::array<Tile*, 8>, 8>& tiles = _board.tiles();
