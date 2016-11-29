@@ -158,8 +158,8 @@ void Chess::findBestMove(Player* player, int depth) {
 			cp->move(pm.toTile, _board.tiles());
 			player->_moves.push_back(Move(pm.fromTile, pm.toTile));
 
-			if (player->score(_board.tiles()) > player->_bestScore) {
-				player->_bestScore = player->score(_board.tiles());
+			if (player->score(_board.tiles()) - otherPlayer->score(_board.tiles()) > player->_bestScore) {
+				player->_bestScore = player->score(_board.tiles()) - otherPlayer->score(_board.tiles());
 				player->_bestMove = player->_moves[0];
 			}
 			findBestMove(otherPlayer, depth + 1);
