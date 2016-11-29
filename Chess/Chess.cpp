@@ -161,9 +161,11 @@ void Chess::findBestMove(Player* player, int depth) {
 
 			findBestMove(otherPlayer, depth - 1);
 
-			if (player->score(_board.tiles()) - otherPlayer->_bestScore) {
-				player->_bestScore = player->score(_board.tiles()) - otherPlayer->score(_board.tiles());
-				player->_bestMove = player->_moves[0];
+			if ((depth == 1 && player == &_player) || (depth == 2 && player == &_computer)) {
+				if (player->score(_board.tiles()) - otherPlayer->score(_board.tiles()) >= player->_bestScore) {
+					player->_bestScore = player->score(_board.tiles()) - otherPlayer->score(_board.tiles());
+					player->_bestMove = player->_moves[0];
+				}
 			}
 
 			// Restore piece
